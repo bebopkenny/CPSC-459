@@ -44,12 +44,11 @@ public class TxHandler {
             }
             claimedUTXOs.add(utxo);
 
-            // (2) The signature on each input must be valid.
-            // Retrieve the corresponding output from the UTXO pool.
+            // (2) The signature on each input must be valid
             Transaction.Output prevTxOutput = utxoPool.getTxOutput(utxo);
             byte[] rawData = tx.getRawDataToSign(i);
-            // Use the RSAKey's verifySignature method (as per provided API).
-            if (!prevTxOutput.address.verifySignature(rawData, input.signature)) {
+            // Assuming Crypto.verifySignature exists and works as expected:
+            if (!Crypto.verifySignature(prevTxOutput.address, rawData, input.signature)) {
                 return false;
             }
 
@@ -122,10 +121,6 @@ public class TxHandler {
         return acceptedTxs.toArray(validTxArray);
     }
 }
-
-
-
-
 
 
 // public class TxHandler {
